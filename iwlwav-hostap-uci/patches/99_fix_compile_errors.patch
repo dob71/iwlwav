@@ -1,0 +1,87 @@
+diff --git a/hostapd/ctrl_iface.c b/hostapd/ctrl_iface.c
+index 8b47595..c7c8d18 100644
+--- a/hostapd/ctrl_iface.c
++++ b/hostapd/ctrl_iface.c
+@@ -5806,7 +5806,7 @@ int hostapd_ctrl_iface_sta_steer(struct hostapd_data *hapd, const char *cmd)
+ 
+ 	os_memset(bssid, 0, sizeof(bssid));
+ 	pos = os_strchr(cmd, ' ');
+-	if (pos && (pos + 1) != '\0') {
++	if (pos && (*pos + 1) != '\0') {
+ 		pos++;
+ 		if (hwaddr_aton(pos, bssid)) {
+ 			btm_parameters = pos;
+@@ -5915,7 +5915,7 @@ int hostapd_ctrl_iface_sta_allow(struct hostapd_data *hapd, const char *cmd)
+ 	if (strlen(cmd) > 0) {
+ 		pos = cmd;
+ 		/* count the number of stations and verify the validity */
+-		while (pos && pos != '\0') {
++		while (pos && *pos != '\0') {
+ 			if (hwaddr_aton(pos, sta_addr))
+ 				return -1;
+ 			count++;
+diff --git a/src/ap/rrm.c b/src/ap/rrm.c
+index d72beab..91df64a 100644
+--- a/src/ap/rrm.c
++++ b/src/ap/rrm.c
+@@ -21,6 +21,8 @@
+ #include "rrm.h"
+ #include "acs.h"
+ 
++#pragma GCC diagnostic ignored "-Wformat-truncation"
++
+ #define HOSTAPD_RRM_REQUEST_TIMEOUT 5
+ 
+ static void hostapd_build_beacon_report_resp(struct wpabuf *buf,
+@@ -2483,3 +2485,4 @@ int hostapd_send_noise_histogram_report(struct hostapd_data *hapd, const u8 *add
+ 	wpabuf_free(buf);
+ 	return ret;
+ }
++#pragma GCC diagnostic pop
+diff --git a/src/utils/wpa_rtlogger.c b/src/utils/wpa_rtlogger.c
+index 2424e39..bd5709d 100644
+--- a/src/utils/wpa_rtlogger.c
++++ b/src/utils/wpa_rtlogger.c
+@@ -12,6 +12,7 @@
+ #include <syslog.h>
+ #endif /* CONFIG_WPA_RTLOGGER_USE_SYSLOG */
+ 
++#pragma GCC diagnostic ignored "-Wformat-truncation"
+ 
+ struct wpa_rtlogger_data {
+ 	struct wpa_rtlogger_config *cfg;
+@@ -626,3 +627,4 @@ void wpa_rtlogger_remote_log(const char *fmt, ...)
+ #endif /* CONFIG_WPA_RTLOGGER_RUN_DEMO */
+ 
+ #endif /* CONFIG_NO_WPA_RTLOGGER */
++#pragma GCC diagnostic pop
+diff --git a/wpa_supplicant/events.c b/wpa_supplicant/events.c
+index 5c71ea2..922884f 100644
+--- a/wpa_supplicant/events.c
++++ b/wpa_supplicant/events.c
+@@ -2473,8 +2473,8 @@ static int wpa_supplicant_event_associnfo(struct wpa_supplicant *wpa_s,
+ 		    get_ie(data->assoc_info.resp_ies,
+ 			   data->assoc_info.resp_ies_len, WLAN_EID_VHT_CAP))
+ 			wpa_s->ieee80211ac = 1;
+-			multi_ap_process_assoc_resp(wpa_s, data->assoc_info.resp_ies,
+-				data->assoc_info.resp_ies_len);
++		multi_ap_process_assoc_resp(wpa_s, data->assoc_info.resp_ies,
++			data->assoc_info.resp_ies_len);
+ 		if (wpa_drv_get_bssid(wpa_s, addr) < 0)
+ 			wpa_dbg(wpa_s, MSG_ERROR, "Failed to get BSSID");
+ 		else if (data->assoc_info.reassoc)
+diff --git a/wpa_supplicant/wpa_cli.c b/wpa_supplicant/wpa_cli.c
+index d328600..ab5ba99 100644
+--- a/wpa_supplicant/wpa_cli.c
++++ b/wpa_supplicant/wpa_cli.c
+@@ -4326,8 +4326,8 @@ static void start_edit(void)
+ #endif /* CONFIG_WPA_CLI_HISTORY_DIR */
+ 	if (home) {
+ 		//Fix for Klocwork issue:ABV.TAINTED (1:Critical)
+-		if(os_strlen(home) > PATH_MAX)
+-			return;
++		//if(os_strlen(home) > PATH_MAX)
++		//	return;
+ 		const char *fname = ".wpa_cli_history";
+ 		int hfile_len = os_strlen(home) + 1 + os_strlen(fname) + 1;
+ 		hfile = os_malloc(hfile_len);

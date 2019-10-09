@@ -1,0 +1,13 @@
+#!/bin/sh /etc/rc.common
+
+USE_PROCD=1
+START=10
+
+start_service() {
+        insmod /lib/modules/*/compat.ko
+        insmod /lib/modules/*/cfg80211.ko
+        insmod /lib/modules/*/mac80211.ko
+        insmod /opt/intel/lib/modules/*/net/mtlkroot.ko
+        insmod /opt/intel/lib/modules/*/net/mtlk.ko fastpath=1,1,1 ahb_off=1 loggersid=255,255 dual_pci=1,0
+	ln -s /usr/bin/util-linux-flock /usr/bin/flock
+}

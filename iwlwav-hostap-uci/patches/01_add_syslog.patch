@@ -1,0 +1,13 @@
+diff --git a/hostapd/defconfig b/hostapd/defconfig
+index 07b9eb3..6e16eb3 100644
+--- a/hostapd/defconfig
++++ b/hostapd/defconfig
+@@ -170,7 +170,7 @@ CONFIG_IEEE80211AX=y
+ #CONFIG_DEBUG_FILE=y
+
+ # Send debug messages to syslog instead of stdout
+-#CONFIG_DEBUG_SYSLOG=y
++CONFIG_DEBUG_SYSLOG=y
+
+ # Add support for sending all debug messages (regardless of debug verbosity)
+ # to the Linux kernel tracing facility. This helps debug the entire stack by
