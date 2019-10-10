@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# Copyright (C) 2011-2012 OpenWrt.org
+#
+
+gen_mac() {
+	local base_addr
+	local mac_addr=""
+	local index=$(($1 - 1))
+	base_addr=`uboot_env --get --name ethaddr`
+	mac_addr="${base_addr:0:15}`printf "%02X" $((0x${base_addr:15:2} + 0x$index))` "
+	echo $mac_addr
+}
+
+modify_wifi_iface() {
+        local interface=$1
+        local macaddr=$2
+        local ssid=$3
+        local commonssid="OWRT_8.X"
+        uci batch <<EOF
+set wireless.${interface}.macaddr='${macaddr}'
+set wireless.${interface}.ssid="$commonssid"_"$ssid"
+EOF
+
+}
+
+modify_wifi_device() {
+        local interface=$1
+        uci batch <<EOF
+set wireless.${interface}.channel='auto'
+set wireless.${interface}.disabled='0'
+EOF
+
+}
+
+. /lib/functions/uci-defaults.sh
+. /lib/functions/lantiq.sh
+
+
+board=$(lantiq_board_name)
+
+case "$board" in
+EASY350*|EASY550*)
+
+
+        macaddr=`gen_mac 16`
+        modify_wifi_iface "default_radio0" "$macaddr" "2.4G"
+        modify_wifi_device "radio0"
+
+        macaddr=`gen_mac 18`
+        modify_wifi_iface "default_radio2" "$macaddr" "5G"
+        modify_wifi_device "radio2"
+
+        ;;
+
+esac
+
+uci del wireless.radio1
+uci del wireless.default_radio1
+uci del wireless.radio3
+uci del wireless.default_radio3
+
+uci commit wireless
+exit 0

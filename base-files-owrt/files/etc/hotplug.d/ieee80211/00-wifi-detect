@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# source of this file is openwrt/package/kernel/mac80211/files/mac80211.hotplug
+# we have done few modification on this file, which is required to bring wlan as per owrt way.
+# avoid generating config through hotplug as it is handled by init script
+
+
+[ "${ACTION}" = "add" ] && {
+	#/sbin/wifi config
+}
