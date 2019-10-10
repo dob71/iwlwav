@@ -10,7 +10,7 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_NAME:=base-files-owrt
+PKG_NAME:=iwlwav-base-files
 PKG_RELEASE:=1
 
 PKG_BUILD_DEPENDS:=hostapd_wave
