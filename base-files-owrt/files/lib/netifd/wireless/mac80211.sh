@@ -750,9 +750,9 @@ drv_mac80211_setup() {
 	set_default distance 0
 	set_default antenna_gain 0
 
-	iw phy "$phy" set antenna $txantenna $rxantenna >/dev/null 2>&1
-	iw phy "$phy" set antenna_gain $antenna_gain
-	iw phy "$phy" set distance "$distance"
+	#iw phy "$phy" set antenna $txantenna $rxantenna >/dev/null 2>&1
+	#iw phy "$phy" set antenna_gain $antenna_gain
+	#iw phy "$phy" set distance "$distance"
 
 	[ -n "$frag" ] && iw phy "$phy" set frag "${frag%%.*}"
 	[ -n "$rts" ] && iw phy "$phy" set rts "${rts%%.*}"
