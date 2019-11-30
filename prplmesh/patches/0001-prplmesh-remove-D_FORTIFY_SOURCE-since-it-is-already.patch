@@ -1,0 +1,69 @@
+From a23d85a416cf3a537133cc2c29c125206c60d463 Mon Sep 17 00:00:00 2001
+From: Tomer Eliyahu <tomer.b.eliyahu@intel.com>
+Date: Thu, 28 Nov 2019 08:59:23 -0800
+Subject: [PATCH] prplmesh: remove -D_FORTIFY_SOURCE since it is already
+ defined
+
+Signed-off-by: Tomer Eliyahu <tomer.b.eliyahu@intel.com>
+---
+ agent/CMakeLists.txt      | 2 +-
+ common/CMakeLists.txt     | 2 +-
+ controller/CMakeLists.txt | 2 +-
+ framework/CMakeLists.txt  | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/agent/CMakeLists.txt b/agent/CMakeLists.txt
+index 32c9855..ef82316 100755
+--- a/agent/CMakeLists.txt
++++ b/agent/CMakeLists.txt
+@@ -19,7 +19,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s")
+ endif()
+ set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS}")
+-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Wl,-S -fPIE -fPIC")
++set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2 -Wformat -Wformat-security -Wl,-S -fPIE -fPIC")
+ if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9)
+     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fstack-protector-strong")
+ else()
+diff --git a/common/CMakeLists.txt b/common/CMakeLists.txt
+index 2abaa18..28cf61d 100644
+--- a/common/CMakeLists.txt
++++ b/common/CMakeLists.txt
+@@ -28,7 +28,7 @@ else()
+ endif()
+ 
+ # Release flags
+-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Wl,-S -fPIE")
++set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s -O2 -Wformat -Wformat-security -Wl,-S -fPIE")
+ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CMAKE_C_FLAGS_RELEASE}")
+ 
+ message(STATUS "Prefix=${CMAKE_INSTALL_PREFIX}")
+diff --git a/controller/CMakeLists.txt b/controller/CMakeLists.txt
+index 745fb6e..89c3bd4 100644
+--- a/controller/CMakeLists.txt
++++ b/controller/CMakeLists.txt
+@@ -15,7 +15,7 @@ message(STATUS "CMAKE_MULTIAP_OUTPUT_DIRECTORY - ${CMAKE_MULTIAP_OUTPUT_DIRECTOR
+ 
+ # Default Compiler flags
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -pthread -Wno-comment  -Wno-unused-parameter -Wno-shift-negative-value -Wno-missing-field-initializers -fPIC")
+-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Wl,-S -fPIE")
++set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s -O2 -Wformat -Wformat-security -Wl,-S -fPIE")
+ 
+ # Compiler specific flags
+ if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9)
+diff --git a/framework/CMakeLists.txt b/framework/CMakeLists.txt
+index 4a7fe92..5aad096 100644
+--- a/framework/CMakeLists.txt
++++ b/framework/CMakeLists.txt
+@@ -15,7 +15,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
+ endif()
+ message("-- Build Type=${CMAKE_BUILD_TYPE}")
+ 
+-set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2 -D_FORTIFY_SOURCE=2 -Wformat -Wformat-security -Wl,-S -fPIE -fPIC")
++set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2 -Wformat -Wformat-security -Wl,-S -fPIE -fPIC")
+ if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9)
+ set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fstack-protector-strong")
+ else()
+-- 
+2.20.1
+
