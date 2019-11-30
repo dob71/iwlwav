@@ -61,7 +61,8 @@ define Package/ltq-wlan-wave_6x-uci
 		@+PACKAGE_iwlwav-hostap-uci \
 		@+PACKAGE_iwlwav-iw \
 		@+PACKAGE_iwlwav-tools \
-		@+PACKAGE_iwlwav-driver-uci
+		@+PACKAGE_iwlwav-driver-uci \
+		@+PACKAGE_prplmesh
 	URL:=http://www.intel.com
 	MAINTAINER:=Intel Corporation
 	MENU:=1
