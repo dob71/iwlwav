@@ -59,9 +59,9 @@ endef
 # To ipkg / Rootfs
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_DIR) $(1)/opt/intel/lib
+	$(INSTALL_DIR) $(1)/usr/lib
 	$(INSTALL_DIR) $(1)/opt/intel/wave/scripts/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdwpal.so $(1)/opt/intel/lib/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdwpal.so $(1)/usr/lib/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dwpal_cli $(1)/usr/sbin
 	chmod 555 $(1)/usr/sbin/dwpal_cli
 endef
@@ -72,9 +72,9 @@ define Build/Clean
 endef
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/opt/intel/lib
+	$(INSTALL_DIR) $(1)/usr/lib
 	$(INSTALL_DIR) $(1)/usr/include
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdwpal.so $(1)/opt/intel/lib
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libdwpal.so $(1)/usr/lib
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/include/*.h $(1)/usr/include/
 	#$(INSTALL_BIN) $(PKG_BUILD_DIR)/*.h $(1)/usr/include/
 endef
