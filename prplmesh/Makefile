@@ -21,7 +21,7 @@ define Package/prplmesh
 	TITLE:=prplmesh
 	URL:=https://github.com/prplfoundation/prplMesh/README.md
 	MAINTAINER:=prplfoundation
-	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +dwpal_6x-uci +ubus +ubox
+	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +dwpal_6x-uci +ubus +ubox +bridge
 endef
 
 define Package/prplmesh/description
