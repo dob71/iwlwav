@@ -1,0 +1,107 @@
+From 5b99e2df8a949f1dde1dab4512ad277ed1046bd0 Mon Sep 17 00:00:00 2001
+From: Tomer Eliyahu <tomer.b.eliyahu@intel.com>
+Date: Thu, 28 Nov 2019 07:48:17 -0800
+Subject: [PATCH] replace sscanf_s with sscanf (not available in safelibsc)
+
+Signed-off-by: Tomer Eliyahu <tomer.b.eliyahu@intel.com>
+---
+ src/uci_wrapper.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/src/uci_wrapper.c b/src/uci_wrapper.c
+index 9aeb42a..ffa23f8 100644
+--- a/src/uci_wrapper.c
++++ b/src/uci_wrapper.c
+@@ -156,7 +156,7 @@ static int uci_converter_rewrite_vaps(char* vap_radio, char* param)
+ 		s = uci_to_section(e);
+ 
+ 		if (!strncmp(s->type, vap_type, MAX_UCI_BUF_LEN)) {
+-			if (sscanf_s(s->e.name, "default_radio%d", &wireless_idx) == 1) {
++			if (sscanf(s->e.name, "default_radio%d", &wireless_idx) == 1) {
+ 				status = snprintf_s(meta_path, MAX_UCI_BUF_LEN,
+ 					"meta-wireless.default_radio%d.device", wireless_idx);
+ 				if (status <= 0) {
+@@ -312,7 +312,7 @@ int uci_converter_reset_param_changed(int radio_index)
+ 		}
+ 
+ 		if (!strncmp(s->type, vap_type, MAX_UCI_BUF_LEN)) {
+-			if (sscanf_s(s->e.name, "default_radio%d", &wireless_idx) == 1) {
++			if (sscanf(s->e.name, "default_radio%d", &wireless_idx) == 1) {
+ 				if (wireless_idx >= DUMMY_VAP_OFFSET)
+ 					continue;
+ 			}
+@@ -537,7 +537,7 @@ int uci_get_existing_interfaces(int *ifacesArr, const unsigned int ifacesArrSize
+ 			if (strncmp(n->name, "ifname", MAX_UCI_BUF_LEN))
+ 				continue;
+ 
+-			itemsRead = sscanf_s(s->e.name, "default_radio%d", &index_read);
++			itemsRead = sscanf(s->e.name, "default_radio%d", &index_read);
+ 			if (index_read >= DUMMY_VAP_OFFSET)
+ 				continue;
+ 			if(itemsRead == 1){
+@@ -685,7 +685,7 @@ int uci_converter_count_elems(const char *sec_type, const char *sec_name,
+ 		if (sec_name && strncmp(s->e.name, sec_name, MAX_UCI_BUF_LEN))
+ 			continue;
+ 
+-		if (sscanf_s(s->e.name, "default_radio%d", &wireless_idx) == 1) {
++		if (sscanf(s->e.name, "default_radio%d", &wireless_idx) == 1) {
+ 			if (wireless_idx >= DUMMY_VAP_OFFSET)
+ 				continue;
+ 		}
+@@ -756,7 +756,7 @@ int uci_getIndexFromInterface(char *interfaceName, int *rpc_index)
+ 			if (strncmp(interfaceName, o->v.string, MAX_UCI_BUF_LEN))
+ 				continue;
+ 
+-			scanf_res = sscanf_s(s->e.name, "default_radio%d", rpc_index);
++			scanf_res = sscanf(s->e.name, "default_radio%d", rpc_index);
+ 
+ 			if (scanf_res < 1 || *rpc_index < 0 || *rpc_index > DUMMY_VAP_OFFSET + MAX_NUM_OF_RADIOS) {
+ 				*rpc_index = -1;
+@@ -818,7 +818,7 @@ int uci_getIndexFromBssid(char *bssid, int *rpc_index)
+ 			if (strncmp(bssid, o->v.string, MAX_UCI_BUF_LEN))
+ 				continue;
+ 
+-			scanf_res = sscanf_s(s->e.name, "default_radio%d", rpc_index);
++			scanf_res = sscanf(s->e.name, "default_radio%d", rpc_index);
+ 
+ 			if (scanf_res < 1 || *rpc_index < 0 || *rpc_index > DUMMY_VAP_OFFSET + MAX_NUM_OF_RADIOS) {
+ 				*rpc_index = -1;
+@@ -946,7 +946,7 @@ int uci_converter_get_int(enum paramType type, int index, const char param[], in
+ 	if (status == RETURN_ERR)
+ 		return RETURN_ERR;
+ 
+-	status = sscanf_s(val, "%d", value);
++	status = sscanf(val, "%d", value);
+ 	if (status != 1)
+ 		return RETURN_ERR;
+ 
+@@ -971,7 +971,7 @@ int uci_converter_get_uint(enum paramType type, int index, const char param[], u
+ 	if (status == RETURN_ERR)
+ 		return RETURN_ERR;
+ 
+-	status = sscanf_s(val, "%u", value);
++	status = sscanf(val, "%u", value);
+ 	if (status != 1)
+ 		return RETURN_ERR;
+ 
+@@ -996,7 +996,7 @@ int uci_converter_get_ulong(enum paramType type, int index, const char param[],
+ 	if (status == RETURN_ERR)
+ 		return RETURN_ERR;
+ 
+-	status = sscanf_s(val, "%lu", value);
++	status = sscanf(val, "%lu", value);
+ 	if (status < 1)
+ 		return RETURN_ERR;
+ 
+@@ -1500,7 +1500,7 @@ static int uci_converter_revert_vaps(char* path, char* device)
+ 		struct uci_element *n;
+ 		s = uci_to_section(e);
+ 
+-		if (sscanf_s(s->e.name, "default_radio%d", &wireless_idx) != 1)
++		if (sscanf(s->e.name, "default_radio%d", &wireless_idx) != 1)
+ 			continue;
+ 
+ 		if (!strncmp(s->type, vap_type, MAX_UCI_BUF_LEN)) {
+-- 
+2.20.1
+
