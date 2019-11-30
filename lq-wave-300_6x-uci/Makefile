@@ -58,6 +58,7 @@ define Package/ltq-wlan-wave_6x-uci
 		@+PACKAGE_uuidgen \
 		@+PACKAGE_udev \
 		@+PACKAGE_dwpal_6x-uci \
+		@+PACKAGE_libspal \
 		@+PACKAGE_iwlwav-hostap-uci \
 		@+PACKAGE_iwlwav-iw \
 		@+PACKAGE_iwlwav-tools \
