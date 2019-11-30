@@ -57,7 +57,7 @@ define Package/prplmesh/install
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_DIR) $(1)/opt/prplmesh
 	$(INSTALL_DIR) $(1)/usr/lib
-	# $(INSTALL_BIN) ./files/etc/init.d/* $(1)/etc/init.d/
+	$(INSTALL_BIN) ./files/etc/init.d/* $(1)/etc/init.d/
 	$(CP) ./files/etc/config/* $(1)/etc/config/
 	$(CP) $(PKG_INSTALL_DIR)/opt/prplmesh/bin $(1)/opt/prplmesh/
 	$(CP) $(PKG_INSTALL_DIR)/opt/prplmesh/scripts/prplmesh_utils.sh $(1)/opt/prplmesh/
