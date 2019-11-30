@@ -13,3 +13,4 @@ CONFIG_PACKAGE_iwlwav-tools=y
 CONFIG_PACKAGE_kmod-iwlwav-driver-kernel-uci=y
 CONFIG_PACKAGE_ltq-wlan-wave_6x-uci=y
 CONFIG_WIRELESS_STA=y
+CONFIG_PACKAGE_prplmesh=y
