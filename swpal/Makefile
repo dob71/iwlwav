@@ -26,7 +26,7 @@ define Package/$(PKG_NAME)
   TITLE:=Intel WLAN SL
   URL:=http://www.intel.com
   MAINTAINER:=Intel Corporation
-  DEPENDS:= +libugwhelper +libcal +csd +servd +libuci +safeclibs
+  DEPENDS:= +libuci +safeclibs +iwlwav-base-files
   MENU:=1
 endef
 
@@ -40,7 +40,7 @@ ifeq ($(CONFIG_USE_MUSL),y)
   TARGET_CFLAGS += -DCONFIG_USE_MUSL
 endif
   
-TARGET_CFLAGS += -DCONFIG_RPCD
+TARGET_CFLAGS += -DCONFIG_RPCD -DPACKAGE_ID=""
 
 # To ipkg / Rootfs
 define Package/$(PKG_NAME)/install
