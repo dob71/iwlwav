@@ -21,7 +21,7 @@ define Package/prplmesh
 	TITLE:=prplmesh
 	URL:=https://github.com/prplfoundation/prplMesh/README.md
 	MAINTAINER:=prplfoundation
-	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +dwpal_6x-uci +ubus +ubox +bridge
+	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +dwpal_6x-uci +ubus +ubox +bridge +libzmq-nc
 endef
 
 define Package/prplmesh/description
@@ -37,7 +37,7 @@ CMAKE_OPTIONS+= \
 	-DPLATFORM_STAGING_DIR=$(STAGING_DIR) \
 	-DPLATFORM_INCLUDE_DIR=$(STAGING_DIR)/usr/include \
 	-DBUILD_TESTS=ON \
-	-DMSGLIB=None \
+	-DMSGLIB=zmq \
 	-DBWL_TYPE=DWPAL \
 	-H. -B./build
 
