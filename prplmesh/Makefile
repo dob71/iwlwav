@@ -25,7 +25,8 @@ define Package/prplmesh
 endef
 
 define Package/prplmesh/description
-	prplmesh
+prplMesh is an open-source, carrier-grade and certifiable
+implementation of the WiFi Alliance’s Multi-AP specification.
 endef
 
 CMAKE_SOURCE_DIR:=
