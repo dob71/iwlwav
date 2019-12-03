@@ -17,11 +17,11 @@ include $(INCLUDE_DIR)/cmake.mk
 
 define Package/prplmesh
 	SECTION:=net
-  	CATEGORY:=Network
+	CATEGORY:=Network
 	TITLE:=prplmesh
 	URL:=https://github.com/prplfoundation/prplMesh/README.md
 	MAINTAINER:=prplfoundation
-	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +dwpal_6x-uci +ubus +ubox +bridge +libzmq-nc
+	DEPENDS:=+bridge +dwpal_6x-uci +@PACKAGE_hostapd-openssl +hostapd +libjson-c +libnl +libopenssl +libpthread +libreadline +librt +libsafec3 +libstdcpp +libzmq-nc +ubox +ubus +uci
 endef
 
 define Package/prplmesh/description
