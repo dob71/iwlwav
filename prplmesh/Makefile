@@ -23,7 +23,7 @@ define Package/prplmesh
 	URL:=https://github.com/prplfoundation/prplMesh/README.md
 	MENU:=1
 	MAINTAINER:=prplfoundation
-	DEPENDS:=+bridge +dwpal_6x-uci +@PACKAGE_hostapd-openssl +hostapd +libjson-c +libnl +libopenssl +libpthread +libreadline +librt +libsafec3 +libstdcpp +libzmq-nc +ubox +ubus +uci
+	DEPENDS:=+bridge +@PACKAGE_hostapd-openssl +hostapd +libjson-c +libnl +libopenssl +libpthread +libreadline +librt +libsafec3 +libstdcpp +libzmq-nc +ubox +ubus +uci
 endef
 
 define Package/prplmesh/description
@@ -50,6 +50,7 @@ CMAKE_OPTIONS+= \
 
 ifeq ($(CONFIG_PRPLMESH_USE_DWPAL),y)
 	CMAKE_OPTIONS+= -DBWL_TYPE=DWPAL
+	DEPENDS+= +dwpal_6x-uci
 else
 	CMAKE_OPTIONS+= -DBWL_TYPE=nl80211
 endif
