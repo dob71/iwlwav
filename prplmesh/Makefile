@@ -11,6 +11,7 @@ PKG_SOURCE_URL:=https://github.com/prplfoundation/prplMesh.git
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_CONFIG_DEPENDS := CONFIG_PRPLMESH_USE_DWPAL
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -20,6 +21,7 @@ define Package/prplmesh
 	CATEGORY:=Network
 	TITLE:=prplmesh
 	URL:=https://github.com/prplfoundation/prplMesh/README.md
+	MENU:=1
 	MAINTAINER:=prplfoundation
 	DEPENDS:=+bridge +dwpal_6x-uci +@PACKAGE_hostapd-openssl +hostapd +libjson-c +libnl +libopenssl +libpthread +libreadline +librt +libsafec3 +libstdcpp +libzmq-nc +ubox +ubus +uci
 endef
@@ -27,6 +29,10 @@ endef
 define Package/prplmesh/description
 prplMesh is an open-source, carrier-grade and certifiable
 implementation of the WiFi Alliance’s Multi-AP specification.
+endef
+
+define Package/prplmesh/config
+	source "$(SOURCE)/Config.in"
 endef
 
 CMAKE_SOURCE_DIR:=
@@ -41,6 +47,12 @@ CMAKE_OPTIONS+= \
 	-DMSGLIB=zmq \
 	-DBWL_TYPE=DWPAL \
 	-H. -B./build
+
+ifeq ($(CONFIG_PRPLMESH_USE_DWPAL),y)
+	CMAKE_OPTIONS+= -DBWL_TYPE=DWPAL
+else
+	CMAKE_OPTIONS+= -DBWL_TYPE=nl80211
+endif
 
 Build/Compile:=cmake --build $(PKG_BUILD_DIR)/build -- $(MAKE_INSTALL_FLAGS) install -j
 Build/Install:=
