@@ -1,0 +1,9 @@
+# prplmesh config
+
+menu "Configuration"
+	depends on PACKAGE_prplmesh
+	
+	config PRPLMESH_USE_DWPAL
+		bool "Use DWPAL as BWL instead of nl80211"
+		default n
+endmenu
