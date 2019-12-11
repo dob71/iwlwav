@@ -15,17 +15,29 @@ PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
-define Package/prplmesh
+define Package/prplmesh/Default
 	SECTION:=net
   	CATEGORY:=Network
 	TITLE:=prplmesh
 	URL:=https://github.com/prplfoundation/prplMesh/README.md
 	MAINTAINER:=prplfoundation
-	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +dwpal_6x-uci +ubus +ubox +bridge +libzmq-nc
+	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +ubus +ubox +bridge +libzmq-nc
 endef
 
-define Package/prplmesh/description
-	prplmesh
+define Package/prplmesh-dwpal
+$(call Package/prplmesh/Default)
+	TITLE+= - DWPAL
+	VARIANT:=dwpal
+	PROVIDES:=prplmesh
+	DEPENDS+= @TARGET_intel_mips +dwpal_6x-uci +iwlwav-hostap-uci
+endef
+
+define Package/prplmesh-nl80211
+$(call Package/prplmesh/Default)
+	TITLE+= - NL80211
+	VARIANT:=nl80211
+	PROVIDES:=prplmesh
+	DEPENDS+= +hostapd-openssl
 endef
 
 CMAKE_SOURCE_DIR:=
@@ -38,8 +50,15 @@ CMAKE_OPTIONS+= \
 	-DPLATFORM_INCLUDE_DIR=$(STAGING_DIR)/usr/include \
 	-DBUILD_TESTS=ON \
 	-DMSGLIB=zmq \
-	-DBWL_TYPE=DWPAL \
 	-H. -B./build
+
+ifeq ($(BUILD_VARIANT),dwpal)
+	CMAKE_OPTIONS+= -DBWL_TYPE=DWPAL
+endif
+
+ifeq ($(BUILD_VARIANT),nl80211)
+	CMAKE_OPTIONS+= -DBWL_TYPE=nl80211
+endif
 
 Build/Compile:=cmake --build $(PKG_BUILD_DIR)/build -- $(MAKE_INSTALL_FLAGS) install -j
 Build/Install:=
@@ -66,4 +85,13 @@ define Package/prplmesh/install
 	$(CP) $(PKG_INSTALL_DIR)/opt/prplmesh/config $(1)/opt/prplmesh/
 endef
 
-$(eval $(call BuildPackage,prplmesh))
+define Package/prplmesh-dwpal/install
+$(call Package/prplmesh/install,$(1))
+endef
+
+define Package/prplmesh-nl80211/install
+$(call Package/prplmesh/install,$(1))
+endef
+
+$(eval $(call BuildPackage,prplmesh-dwpal))
+$(eval $(call BuildPackage,prplmesh-nl80211))
