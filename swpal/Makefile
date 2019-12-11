@@ -31,7 +31,7 @@ ifeq ($(CONFIG_USE_MUSL),y)
   TARGET_CFLAGS += -DCONFIG_USE_MUSL
 endif
 
-TARGET_CFLAGS += -DCONFIG_RPCD
+TARGET_CFLAGS += -DCONFIG_RPCD -DPACKAGE_ID=""
 
 define Package/libspal/install
 	$(INSTALL_DIR) $(1)/$(VENDOR_PATH)/usr/lib
