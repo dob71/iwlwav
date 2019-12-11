@@ -7,7 +7,6 @@ PKG_VERSION:=$(PKG_SOURCE_VERSION)
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_wave/swpal.git
 PKG_BUILD_DIR:=$(BUILD_DIR)/libspal-$(PKG_SOURCE_VERSION)
-PKG_BUILD_DEPENDS:=libugwhelper libuci
 
 include $(INCLUDE_DIR)/package.mk
 -include $(STAGING_DIR)/mk/ugw-loglevel.mk

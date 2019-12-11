@@ -4,17 +4,10 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=iwlwav-iw
 PKG_REV:=2661aff5fbd3ca7259bc5bab5df7419d1571976d
 PKG_VERSION:=4.14
-PKG_RELEASE:=$(PKG_REV)
-PKG_BASE_NAME:=iwlwav-iw
-PKG_SOURCE:=$(PKG_BASE_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_wave/iwlwav-iw.git
-PKG_SOURCE_SUBDIR:=$(PKG_BASE_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
+PKG_SOURCE_VERSION:=2661aff5fbd3ca7259bc5bab5df7419d1571976d
 PKG_SOURCE_PROTO:=git
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_BASE_NAME)-$(PKG_VERSION)
-PKG_DEFAULT_CUSTOM_SOURCE_DIR:=$(shell pwd)
-SBIN_FOLDER:=usr/sbin
-PKG_BUILD_DEPENDS:=libnl3 libnl PACKAGE_ltq-wlan-wave_6x-uci:ltq-wlan-wave_6x-uci
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -22,7 +15,7 @@ define Package/iwlwav-iw
   SECTION:=net
   CATEGORY:=Network
   TITLE:=iw for Wave
-  DEPENDS:=+libnl
+  DEPENDS:=+libnl +iwlwav-driver-uci
   MENU:=1
 endef
 
@@ -42,9 +35,9 @@ define Build/Compile
 endef
 
 define Package/iwlwav-iw/install
-	$(INSTALL_DIR) $(1)/$(SBIN_FOLDER)
+	$(INSTALL_DIR) $(1)/usr/sbin
 	$(INSTALL_DIR) -p $(1)/etc
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/iw $(1)/$(SBIN_FOLDER)/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/iw $(1)/usr/sbin/
 	echo -e "iwlwav_iw_hash=\"$(PKG_REV)\"\niwlwav_iw_tag=\"$(PKG_REV)\"" > $(1)/etc/iwlwav_iw.ver
 endef
 

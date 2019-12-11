@@ -7,12 +7,11 @@ PKG_VERSION:=6.1.0
 PKG_RELEASE:=$(PKG_REV)
 PKG_SOURCE:=iwlwav-driver-uci-$(PKG_VERSION)-$(PKG_REV).tar.bz2
 PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_wave/iwlwav-dev.git
-PKG_SOURCE_SUBDIR:=iwlwav-driver-uci-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_SOURCE_PROTO:=git
 PKG_BUILD_DIR:=$(BUILD_DIR)/iwlwav-driver-uci-$(PKG_VERSION)
 CONFIG_FOLDER:=../lq-wave-300_6x-uci/files/config
-PKG_BUILD_DEPENDS:=kmod-directconnect-dp
+PKG_CONFIG_DEPENDS:=CONFIG_PACKAGE_kmod-directconnect-dp
 
 CONFIG_FILE:=GRX350_GRX550_WAVE600_CONFIG
 ifeq ($(CONFIG_TARGET_lantiq_xrx500_easy350_anywan_axepoint),y)
