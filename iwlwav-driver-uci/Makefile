@@ -1,34 +1,17 @@
-#
-# Openwrt Makefile for wave related SW element
-#
-# Simplify mode 1.0
-#
-#
-
-#### Includes ###################################
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-#### Package Info ###############################
-# iwlwav-dev branch: master_6x
 PKG_NAME:=iwlwav-driver-uci
 PKG_REV:=152720864ca7dc06c0d3b298c47b1b1d1f1bc2f8
 PKG_VERSION:=6.1.0
 PKG_RELEASE:=$(PKG_REV)
-
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_REV).tar.bz2
+PKG_SOURCE:=iwlwav-driver-uci-$(PKG_VERSION)-$(PKG_REV).tar.bz2
 PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_wave/iwlwav-dev.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_SUBDIR:=iwlwav-driver-uci-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_SOURCE_PROTO:=git
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
-KERNEL_PKG_NAME:=iwlwav-driver-kernel-uci
+PKG_BUILD_DIR:=$(BUILD_DIR)/iwlwav-driver-uci-$(PKG_VERSION)
 CONFIG_FOLDER:=../lq-wave-300_6x-uci/files/config
-#PKG_DEFAULT_CUSTOM_SOURCE_DIR:=$(shell pwd)
-
-#SBIN_FOLDER:=usr/sbin
-
 PKG_BUILD_DEPENDS:=kmod-directconnect-dp
 
 CONFIG_FILE:=GRX350_GRX550_WAVE600_CONFIG
@@ -38,19 +21,19 @@ endif
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
+define Package/iwlwav-driver-uci
   SECTION:=net
   CATEGORY:=Network
   TITLE:=Wave Driver
-  DEPENDS:=+kmod-$(KERNEL_PKG_NAME)
+  DEPENDS:=+kmod-iwlwav-driver-kernel-uci
   MENU:=1
 endef
 
-define Package/$(PKG_NAME)/description
+define Package/iwlwav-driver-uci/description
   Wave driver package
 endef
 
-define KernelPackage/$(KERNEL_PKG_NAME)
+define KernelPackage/iwlwav-driver-kernel-uci
   SUBMENU:=Intel
   TITLE:=Kernel Support for Wave WLAN
   DEPENDS:=+PACKAGE_kmod-directconnect-dp:kmod-directconnect-dp
@@ -115,23 +98,9 @@ define KernelPackage/$(KERNEL_PKG_NAME)
     CONFIG_WLAN_VENDOR_ZYDAS=y
 endef
 
-define KernelPackage/$(KERNEL_PKG_NAME)/description
+define KernelPackage/iwlwav-driver-kernel-uci/description
  Enable Wlan related options in Kernel
 endef
-#### Directory Paths ############################
-#LIBNL_DIR:=$(wildcard $(BUILD_DIR)/libnl-3*)
-
-#IFX_CFLAGS += -I$(LIBNL_DIR)/include
-#IFX_LDFLAGS += -L$(LIBNL_DIR)/lib/.libs -lnl-3
-
-#### Target Rules ###############################
-# How to build driver
-# BASE_PATH=/local/iserovic/backport_integ/ugw_sw/ugw/openwrt/core/
-# CROSS_COMPILE_ARG=$BASE_PATH/staging_dir/toolchain-mips_mips32_gcc-4.8-linaro_uClibc-0.9.33.2/bin/mips-openwrt-linux-uclibc-
-# ARCH_ARG=mips
-# KLIB_BUILD_ARG=$BASE_PATH/build_dir/target-mips_mips32_uClibc-0.9.33.2_grx350_1600_mr_eth_rt_74/linux-lantiq_xrx500/linux-3.10.104
-# KLIB_ARG=$BASE_PATH/build_dir/target-mips_mips32_uClibc-0.9.33.2_grx350_1600_mr_eth_rt_74/root-lantiq/lib/modules/3.10.104
-# export STAGING_DIR=""
 
 CROSS_COMPILE=$(if $(CONFIG_EXTERNAL_TOOLCHAIN),$(CONFIG_TOOLCHAIN_ROOT)/bin/$(CONFIG_TOOLCHAIN_PREFIX),$(TOOLCHAIN_DIR)/bin/$(TARGET_CROSS)) # fix for non external toolchain!
 
@@ -143,11 +112,7 @@ define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) CROSS_COMPILE=$(CROSS_COMPILE) ARCH=$(ARCH) KLIB_BUILD=$(LINUX_DIR) KLIB=$(TARGET_DIR)/$(TARGET_MODULES_DIR) UGW_DRIVER_VERSION=$(PKG_REV)
 endef
 
-# NOTE: driver build produces 5 KOs 
-# compat.ko, cfg80211.ko, mac80211.ko – should be placed in /lib/modules/3.10.104/
-# mtlk.ko, mtlkroot.ko – should be placed in /opt/intel/lib/modules/3.10.104/net/
-
-define Package/$(PKG_NAME)/install
+define Package/iwlwav-driver-uci/install
 	$(INSTALL_DIR) $(1)/lib/modules/$(LINUX_VERSION)
 	$(INSTALL_DIR) $(1)/opt/intel/lib/modules/$(LINUX_VERSION)/net
 	$(INSTALL_DIR) $(STAGING_DIR)/usr/include/
@@ -163,7 +128,5 @@ define Package/$(PKG_NAME)/install
 	echo -e "iwlwav_driver_hash=\"$(PKG_REV)\"\niwlwav_driver_tag=\"$(PKG_REV)\"" > $(1)/etc/iwlwav_driver.ver
 endef
 
-
-$(eval $(call KernelPackage,$(KERNEL_PKG_NAME)))
-$(eval $(call BuildPackage,$(PKG_NAME)))
-
+$(eval $(call KernelPackage,iwlwav-driver-kernel-uci))
+$(eval $(call BuildPackage,iwlwav-driver-uci))

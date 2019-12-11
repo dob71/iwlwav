@@ -1,8 +1,3 @@
-#
-# Openwrt Makefile for ltq-wlan-wave_6x
-####################################
-
-# Includes
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
@@ -10,8 +5,6 @@ PKG_NAME:=ltq-wlan-wave_6x-uci
 PKG_VERSION:=06.01.00
 PKG_REV:=da87c46c3ae2d0d888ab53d41d0fd5aa04e1832b
 WLAN_BUILD_VERSION:=ER4.31
-
-#package_source
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
 PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_wave/wave_bin.git
@@ -28,8 +21,8 @@ REGULATORY_BIN_FOLDER:=$(PKG_BUILD_DIR)/regulatory/bin
 BIN_FOLDER:=opt/intel/bin
 BINS_FOLDER:=opt/intel/wave/images
 SBIN_FOLDER:=opt/intel/sbin
-include $(INCLUDE_DIR)/package.mk
 
+include $(INCLUDE_DIR)/package.mk
 
 define Package/ltq-wlan-wave_6x-uci
 	SECTION:=utils
@@ -73,7 +66,6 @@ define Package/ltq-wlan-wave_6x-uci/description
  This package contains wave binaries components
 endef
 
-#### Target Rules ##########################
 define Package/ltq-wlan-wave_6x-uci/config
 	source "$(SOURCE)/config/Config.in"
 endef

@@ -1,12 +1,3 @@
-#
-# Copyright (C) 2009 OpenWrt.org
-# Copyright (C) 2017 Intel Corporation
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-# $Id: $
-
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
@@ -17,7 +8,7 @@ PKG_BUILD_DEPENDS:=hostapd_wave
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
+define Package/iwlwav-base-files
   SUBMENU:=Base Files
   SECTION:=base
   CATEGORY:=Intel
@@ -27,10 +18,7 @@ define Package/$(PKG_NAME)
   DEPENDS:=+busybox
 endef
 
-#define Package/$(PKG_NAME)/conffiles
-#endef
-
-define Package/$(PKG_NAME)/description
+define Package/iwlwav-base-files/description
  This package contains files and system scripts for OpenWrt,
  common for all Intel CPE Targets.
 endef
@@ -41,12 +29,12 @@ endef
 define Build/Compile
 endef
 
-define Package/$(PKG_NAME)/install
+define Package/iwlwav-base-files/install
 	$(INSTALL_DIR) $(1)/mnt
 	$(INSTALL_DIR) $(1)/usr/sbin
 	$(LN) /tmp/mounts $(1)/mnt/usb
 	$(CP) ./files/* $(1)/
 endef
 
-$(eval $(call BuildPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,iwlwav-base-files))
 
