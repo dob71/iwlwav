@@ -31,7 +31,7 @@ ifeq ($(CONFIG_USE_MUSL),y)
   TARGET_CFLAGS += -DCONFIG_USE_MUSL
 endif
 
-TARGET_CFLAGS += -DCONFIG_RPCD -DPACKAGE_ID=""
+TARGET_CFLAGS += -DCONFIG_RPCD
 
 define Package/libspal/install
 	$(INSTALL_DIR) $(1)/$(VENDOR_PATH)/usr/lib
@@ -42,11 +42,9 @@ define Package/libspal/install
 	$(INSTALL_DIR) $(1)/sbin
 	$(INSTALL_DIR) $(1)/opt/intel/wave/scripts/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/libspal.so $(1)/$(VENDOR_PATH)/usr/lib
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/lib/netifd/netifd-wireless.sh $(1)/lib/netifd/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/lib/netifd/hostapd.sh $(1)/lib/netifd/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/lib/netifd/wireless/* $(1)/lib/netifd/wireless/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/lib/wifi/* $(1)/lib/wifi/
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/sbin/wifi $(1)/sbin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/etc/wave/scripts/load_dut.sh $(1)/opt/intel/wave/scripts/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/etc/wave/scripts/flash_file_saver.sh $(1)/opt/intel/wave/scripts/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/files/scripts/etc/wave/scripts/debug_toolbox.sh $(1)/opt/intel/wave/scripts/
