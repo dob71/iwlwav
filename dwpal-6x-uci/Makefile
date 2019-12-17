@@ -9,6 +9,7 @@ PKG_SOURCE_PROTO:=git
 PKG_BUILD_DIR:=$(BUILD_DIR)/dwpal_6x-uci-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/kernel.mk
 
 define Package/dwpal_6x-uci
   SECTION:=net
@@ -17,7 +18,7 @@ define Package/dwpal_6x-uci
   TITLE:=D-WPAL Library
   URL:=http://www.intel.com
   MAINTAINER:=Intel Corporation
-  DEPENDS:= +libnl +librt +libsafec +libncurses +libreadline
+  DEPENDS:= +libnl +librt +libsafec +libncurses +libreadline +iwlwav-hostap-uci
   MENU:=1
 endef
 
@@ -27,7 +28,7 @@ endef
 
 LIBNL_DIR:=$(wildcard $(BUILD_DIR)/libnl-3*)
 
-IWLWAV_HOSTAP_DIR:=$(wildcard $(BUILD_DIR)/iwlwav-hostap-uci-*)
+IWLWAV_HOSTAP_DIR:=$(KERNEL_BUILD_DIR)/iwlwav-hostap-uci-2.6
 IWLWAV_IW_DIR:=$(wildcard $(BUILD_DIR)/iwlwav-iw-*)
 
 IFX_CFLAGS += -I$(IWLWAV_IW_DIR) -I$(IWLWAV_HOSTAP_DIR)/src/common/ -I$(IWLWAV_HOSTAP_DIR)/src/utils/ -I$(LIBNL_DIR)/include
