@@ -15,7 +15,7 @@ define Package/iwlwav-hostap-uci
   SECTION:=net
   CATEGORY:=Network
   TITLE:=hostapd for Wave
-  DEPENDS:=+libopenssl +librt +libnl +iwlwav-driver-uci
+  DEPENDS:=+libopenssl +librt +libnl +!IN_SDK:+iwlwav-driver-uci
   MENU:=1
 endef
 
