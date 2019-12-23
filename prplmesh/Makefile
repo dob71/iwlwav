@@ -17,7 +17,7 @@ define Package/prplmesh/Default
 	TITLE:=prplmesh
 	URL:=https://github.com/prplfoundation/prplMesh/README.md
 	MAINTAINER:=prplfoundation
-	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +libsafec3 +ubus +ubox +bridge +libzmq-nc
+	DEPENDS:=+libstdcpp +libpthread +librt +libjson-c +libreadline +libopenssl +libnl +uci +ubus +ubox +bridge +libzmq-nc
 endef
 
 define Package/prplmesh-dwpal
@@ -25,7 +25,7 @@ $(call Package/prplmesh/Default)
 	TITLE+= - DWPAL
 	VARIANT:=dwpal
 	PROVIDES:=prplmesh
-	DEPENDS+= @TARGET_intel_mips +dwpal_6x-uci +iwlwav-hostap-uci
+	DEPENDS+= @TARGET_intel_mips +dwpal_6x-uci +iwlwav-hostap-uci +libsafec3
 endef
 
 define Package/prplmesh-nl80211
@@ -39,7 +39,6 @@ endef
 CMAKE_SOURCE_DIR:=
 CMAKE_OPTIONS+= \
 	-DTARGET_PLATFORM=openwrt \
-	-DTARGET_PLATFORM_TYPE=ugw \
 	-DCMAKE_INSTALL_PREFIX=/opt/prplmesh \
 	-DPLATFORM_BUILD_DIR=$(BUILD_DIR) \
 	-DPLATFORM_STAGING_DIR=$(STAGING_DIR) \
@@ -49,11 +48,13 @@ CMAKE_OPTIONS+= \
 	-H. -B./build
 
 ifeq ($(BUILD_VARIANT),dwpal)
-	CMAKE_OPTIONS+= -DBWL_TYPE=DWPAL
+	CMAKE_OPTIONS+= -DBWL_TYPE=DWPAL\
+		-DTARGET_PLATFORM_TYPE=ugw
 endif
 
 ifeq ($(BUILD_VARIANT),nl80211)
-	CMAKE_OPTIONS+= -DBWL_TYPE=nl80211
+	CMAKE_OPTIONS+= -DBWL_TYPE=NL80211 \
+		-DTARGET_PLATFORM_TYPE=turris-omnia
 endif
 
 Build/Compile:=cmake --build $(PKG_BUILD_DIR)/build -- $(MAKE_INSTALL_FLAGS) install -j
