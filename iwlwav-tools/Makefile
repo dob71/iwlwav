@@ -2,18 +2,12 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=iwlwav-tools
-PKG_REV:=4aa0ff119c4e8523ee18affaa8c171e952c00e22
 PKG_VERSION:=6.1.0
 PKG_RELEASE:=1
-
-PKG_BASE_NAME:=iwlwav-tools
-PKG_SOURCE:=$(PKG_BASE_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_wave/iwlwav-tools.git
-PKG_SOURCE_SUBDIR:=$(PKG_BASE_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
+PKG_SOURCE_VERSION:=4aa0ff119c4e8523ee18affaa8c171e952c00e22
 PKG_SOURCE_PROTO:=git
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_BASE_NAME)-$(PKG_VERSION)
-PKG_BUILD_DEPENDS:=libnl3 libnl librt pthread
 
 include $(INCLUDE_DIR)/package.mk
 

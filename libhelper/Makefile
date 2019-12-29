@@ -4,10 +4,7 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=libhelper
 PKG_SOURCE_VERSION:=2.3.0.8
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_NAME:=ugw_sdk
-PKG_SOURCE_INNERDIR:=helper/libhelper
-PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_ugw/$(PKG_SOURCE_NAME).git
-
+PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_ugw/ugw_sdk.git
 PKG_BUILD_DIR:=$(BUILD_DIR)/libhelper-$(PKG_SOURCE_VERSION)
 PKG_MAINTAINER:=Intel
 PKG_LICENSE:=LGPL2.1

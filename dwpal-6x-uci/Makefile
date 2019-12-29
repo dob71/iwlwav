@@ -1,20 +1,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dwpal_6x-uci
-PKG_REV:=eb4964a4f17eccc5b18c70a8038abbceda2709d3
 PKG_VERSION:=1.0.0.1
-PKG_RELEASE:=$(PKG_REV)
-PKG_BASE_NAME:=dwpal_6x-uci
-PKG_SOURCE:=$(PKG_BASE_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=ssh://git@gts-chd.intel.com:29418/sw_wave/dwpal.git
-PKG_SOURCE_SUBDIR:=$(PKG_BASE_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
+PKG_SOURCE_VERSION:=eb4964a4f17eccc5b18c70a8038abbceda2709d3
 PKG_SOURCE_PROTO:=git
 PKG_BUILD_DIR:=$(BUILD_DIR)/dwpal_6x-uci-$(PKG_VERSION)
-PKG_DEFAULT_CUSTOM_SOURCE_DIR:=$(shell pwd)
-PKG_BUILD_DEPENDS:=libnl3 libnl librt libncurses iwlwav-hostap-uci iwlwav-iw PACKAGE_safeclibs libreadline
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/kernel.mk
 
 define Package/dwpal_6x-uci
   SECTION:=net
@@ -23,7 +18,7 @@ define Package/dwpal_6x-uci
   TITLE:=D-WPAL Library
   URL:=http://www.intel.com
   MAINTAINER:=Intel Corporation
-  DEPENDS:= +libnl +librt +libsafec +libncurses +libreadline
+  DEPENDS:= +libnl +librt +libsafec +libncurses +libreadline +iwlwav-hostap-uci
   MENU:=1
 endef
 
@@ -33,7 +28,7 @@ endef
 
 LIBNL_DIR:=$(wildcard $(BUILD_DIR)/libnl-3*)
 
-IWLWAV_HOSTAP_DIR:=$(wildcard $(BUILD_DIR)/iwlwav-hostap-uci-*)
+IWLWAV_HOSTAP_DIR:=$(KERNEL_BUILD_DIR)/iwlwav-hostap-uci-2.6
 IWLWAV_IW_DIR:=$(wildcard $(BUILD_DIR)/iwlwav-iw-*)
 
 IFX_CFLAGS += -I$(IWLWAV_IW_DIR) -I$(IWLWAV_HOSTAP_DIR)/src/common/ -I$(IWLWAV_HOSTAP_DIR)/src/utils/ -I$(LIBNL_DIR)/include

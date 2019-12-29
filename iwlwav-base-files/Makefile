@@ -4,8 +4,6 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=iwlwav-base-files
 PKG_RELEASE:=1
 
-PKG_BUILD_DEPENDS:=hostapd_wave
-
 include $(INCLUDE_DIR)/package.mk
 
 define Package/iwlwav-base-files
@@ -15,7 +13,7 @@ define Package/iwlwav-base-files
   TITLE:=Common files for Intel OWRT CPE Systems
   URL:=http://www.intel.com/
   MAINTAINER:=Intel
-  DEPENDS:=+busybox
+  DEPENDS:=+iwlwav-hostap-uci
 endef
 
 define Package/iwlwav-base-files/description
