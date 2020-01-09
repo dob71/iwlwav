@@ -1,12 +1,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prplmesh
-PKG_VERSION:=1.0
-PKG_RELEASE:=1
-PKG_REV:=c40e66e
+PKG_RELEASE:=1.4.0
 PKG_SOURCE_URL:=https://github.com/prplfoundation/prplMesh.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=c40e66e
+PKG_SOURCE_VERSION:=eeaac321
+PKG_VERSION:=$(PKG_RELEASE)-$(PKG_SOURCE_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -45,6 +44,7 @@ CMAKE_OPTIONS+= \
 	-DPLATFORM_INCLUDE_DIR=$(STAGING_DIR)/usr/include \
 	-DBUILD_TESTS=ON \
 	-DMSGLIB=zmq \
+	-DREVISION=$(PKG_SOURCE_VERSION) \
 	-H. -B./build
 
 ifeq ($(BUILD_VARIANT),dwpal)
