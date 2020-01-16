@@ -39,10 +39,10 @@ wlan_ready_poll()
 ####################
 
 status_function() {
-        echo "enable: $(uci get prplmesh.config.enable)" > /dev/console
-        echo "management_mode: $(uci get prplmesh.config.management_mode)" > /dev/console
-        echo "operating_mode: $(uci get prplmesh.config.operating_mode)" > /dev/console
-        wlan_ready && echo "WLAN Ready" > /dev/console || echo "WLAN not ready" > /dev/console
+        echo "enable: $(uci get prplmesh.config.enable)"
+        echo "management_mode: $(uci get prplmesh.config.management_mode)"
+        echo "operating_mode: $(uci get prplmesh.config.operating_mode)"
+        wlan_ready && echo "WLAN Ready" > /dev/console || echo "WLAN not ready"
         /opt/prplmesh/prplmesh_utils.sh status
 }
 
@@ -98,23 +98,33 @@ status() {
 }
 
 repeater_mode() {
+	stop
+	uci set network.lan.ifname='eth1 eth0_1 eth0_2 eth0_3 eth0_4'
+	uci commit network
         uci set prplmesh.config.management_mode='Multi-AP-Agent'
         uci set prplmesh.config.operating_mode='WDS-Repeater'
         uci set prplmesh.config.wired_backhaul=1
         uci set prplmesh.config.master=0
         uci set prplmesh.config.gateway=0
         uci commit prplmesh
-        echo "repeater mode set, reboot or restart prplmesh to apply" > /dev/console
+	/etc/init.d/network restart
+	start
+        echo "prplmesh repeater mode set"
 }
 
 gateway_mode() {
+	stop
+	uci set network.lan.ifname='eth0_1 eth0_2 eth0_3 eth0_4'
+	uci commit network
         uci set prplmesh.config.management_mode='Multi-AP-Controller-and-Agent'
         uci set prplmesh.config.operating_mode='Gateway'
         uci set prplmesh.config.wired_backhaul=0
         uci set prplmesh.config.master=1
         uci set prplmesh.config.gateway=1
         uci commit prplmesh
-        echo "gateway mode set, reboot or restart prplmesh to apply" > /dev/console
+	/etc/init.d/network restart
+	start
+        echo "prplmesh gateway mode set"
 }
 
 EXTRA_COMMANDS="status repeater_mode gateway_mode"
