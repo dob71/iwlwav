@@ -4,7 +4,7 @@ PKG_NAME:=prplmesh
 PKG_RELEASE:=1.4.0
 PKG_SOURCE_URL:=https://github.com/prplfoundation/prplMesh.git
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=eeaac321
+PKG_SOURCE_VERSION:=d78175d4
 PKG_VERSION:=$(PKG_RELEASE)-$(PKG_SOURCE_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
