@@ -71,9 +71,11 @@ endef
 define Package/prplmesh/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_DIR) $(1)/opt/prplmesh
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(INSTALL_BIN) ./files/etc/init.d/* $(1)/etc/init.d/
+	$(INSTALL_BIN) ./files/99-prplmesh-update-config.sh $(1)/etc/uci-defaults/
 	$(CP) ./files/etc/config/* $(1)/etc/config/
 	$(CP) $(PKG_INSTALL_DIR)/opt/prplmesh/bin $(1)/opt/prplmesh/
 	$(CP) $(PKG_INSTALL_DIR)/opt/prplmesh/scripts/prplmesh_utils.sh $(1)/opt/prplmesh/
